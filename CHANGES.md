@@ -2,6 +2,24 @@
 
 In this section you can find what has changed from version to version.
 
+## 5.0.0
+
+- Creates dynamic xcframework;
+- Bump Firebase to version 8.2.0;
+
+## 4.11.0
+
+- Implement storage event that will include properties such as;
+  - `totalStorage` - representing how much space the app is consuming such as **documents**, **libraries** and **temporary**;
+  - `filesStorage` - representing how much space the SDK files are consuming;
+  - `databaseStorage` - representing how much space the SDK database is consuming;
+- New background task identifier to execute daily actions:
+  - `com.drivit.core.task.daily`;
+
+## 4.10.0
+
+- Add public API to get SDK build number;
+
 ## 4.9.1
 
 - Fixes silent crash related to shared initializers;
@@ -38,8 +56,8 @@ In this section you can find what has changed from version to version.
 ## 4.5.0
 
 - Allows you to enable Background Processing capability by setting the following background task identifiers:
-  - `com.drivit.core.task.sync`
-  - `com.drivit.core.task.refresh` 
+  - `com.drivit.core.task.sync`;
+  - `com.drivit.core.task.refresh`;
 - Updates `Firebase` dependency version to `7.4.0`;
 - Logout action now returns a boolean to handle unsuccessful scenario;
 - DIPermission changes:
