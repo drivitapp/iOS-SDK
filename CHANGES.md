@@ -2,6 +2,12 @@
 
 In this section you can find what has changed from version to version.
 
+## 5.1.0
+
+- Create API to return sync status;
+- Create API to return estimates for a given period;
+- Implement different sync behavior depending on mobile data flag;
+
 ## 5.0.0
 
 - Creates dynamic xcframework;

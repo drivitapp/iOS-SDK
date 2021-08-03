@@ -21,6 +21,7 @@ import LocalAuthentication
 import MapKit
 import Foundation.NSByteCountFormatter
 import Foundation.NSData
+import Foundation.NSDate
 import Foundation.NSThread
 import Foundation.NSURLSession
 import Security
@@ -73,6 +74,9 @@ extension NSNotification.Name {
     get
   }
   public static var loggedOut: Foundation.Notification.Name {
+    get
+  }
+  public static var didTriggerNewSyncStatus: Foundation.Notification.Name {
     get
   }
   public static var didStartTripNotification: Foundation.Notification.Name {
@@ -255,6 +259,8 @@ extension Drivit {
       get
     }
     public static func vehicles() -> [DIVehicle]
+    public static func syncStatus() -> DISyncStatus
+    public static func estimates(estimationPeriod: Swift.UInt) -> DIEstimates
     public static func currentVehicle() -> DIVehicle?
     @available(*, deprecated, message: "Use currentVehicle().settings.fuelPrice instead")
     public static func currentVehicleFuelPrice() -> Swift.Double
@@ -318,6 +324,8 @@ public protocol DIAuthentication : AnyObject {
 public protocol DIOrigin : AnyObject {
   var address: Swift.String? { get set }
   var coordinate: DICoordinate? { get }
+}
+public struct DISyncStatus {
 }
 public protocol DIReport {
   var tripCount_total: Swift.Int { get }
@@ -688,6 +696,10 @@ extension Drivit {
     public static func removeAccount(completion: @escaping (Swift.Result<Swift.Void, Swift.Error>) -> Swift.Void)
     @objc deinit
   }
+}
+public struct DIHistoricalData {
+}
+public struct DIEstimates {
 }
 public enum DIEventType : Swift.Int, Swift.Codable {
   case error
