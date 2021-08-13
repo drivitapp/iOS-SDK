@@ -14,31 +14,31 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		fCtksUg7OQjviwA5uTCOnOQtcpU=
+		X+kNfvwjwQg+bZmIK6exG7u4MsQ=
 		</data>
 		<key>Modules/Drivit.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		MVZmLvobazMYai7Kx3koWyo9Mb0=
+		s3jt8/xe8TtJCD3+hwFpYL1ifM0=
 		</data>
 		<key>Modules/Drivit.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		o3nIMNBHx0eg2yBCB4Cmi5fPKQY=
+		86GAOxmi7CjHWZ5YpdTmUfp4lt0=
 		</data>
 		<key>Modules/Drivit.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		9PkMeOZAxn2GzsEHUoFtlin4ZNs=
+		ybIXhoa19QuhA+947eh4srP016w=
 		</data>
 		<key>Modules/Drivit.swiftmodule/arm64.swiftdoc</key>
 		<data>
-		MVZmLvobazMYai7Kx3koWyo9Mb0=
+		s3jt8/xe8TtJCD3+hwFpYL1ifM0=
 		</data>
 		<key>Modules/Drivit.swiftmodule/arm64.swiftinterface</key>
 		<data>
-		o3nIMNBHx0eg2yBCB4Cmi5fPKQY=
+		86GAOxmi7CjHWZ5YpdTmUfp4lt0=
 		</data>
 		<key>Modules/Drivit.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		9PkMeOZAxn2GzsEHUoFtlin4ZNs=
+		ybIXhoa19QuhA+947eh4srP016w=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -61,42 +61,42 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			vfJTg5fo9nkFcvOJbWQzbW5XU+AA8IDns8WPPx1Azzs=
+			xbZaGN90c/MiHZ+s1CLFmp+x4hkPC7c/ENgn6hrNjfs=
 			</data>
 		</dict>
 		<key>Modules/Drivit.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RhrUqdhExWd/j8PaBWwjVyRcJntj/jDtELaCjAisjjU=
+			uW9M4WdQh2y6bfllZl2DZ2pbYHN76Bv3Vp5tX/m/Pow=
 			</data>
 		</dict>
 		<key>Modules/Drivit.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			++7EDHBO9LSMsHWoIvRtH/6KIB7vEwDweR4JNooQFjg=
+			jBMX4H/3fyFZzZC1yFlHyXjnDiyljH28tV5TZ3RmBPc=
 			</data>
 		</dict>
 		<key>Modules/Drivit.swiftmodule/arm64.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			vfJTg5fo9nkFcvOJbWQzbW5XU+AA8IDns8WPPx1Azzs=
+			xbZaGN90c/MiHZ+s1CLFmp+x4hkPC7c/ENgn6hrNjfs=
 			</data>
 		</dict>
 		<key>Modules/Drivit.swiftmodule/arm64.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RhrUqdhExWd/j8PaBWwjVyRcJntj/jDtELaCjAisjjU=
+			uW9M4WdQh2y6bfllZl2DZ2pbYHN76Bv3Vp5tX/m/Pow=
 			</data>
 		</dict>
 		<key>Modules/Drivit.swiftmodule/arm64.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			++7EDHBO9LSMsHWoIvRtH/6KIB7vEwDweR4JNooQFjg=
+			jBMX4H/3fyFZzZC1yFlHyXjnDiyljH28tV5TZ3RmBPc=
 			</data>
 		</dict>
 	</dict>

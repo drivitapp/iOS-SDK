@@ -359,7 +359,8 @@ public protocol DIAnalyticsDelegate : AnyObject {
 @_hasMissingDesignatedInitializers public class DIAnalytics {
   public enum Event {
     case connectivity(DIAnalytics.Event.Connectivity)
-    case resources(DIAnalytics.Event.Resources)
+    case storage(DIAnalytics.Event.Storage)
+    case permissions(DIAnalytics.Event.Permissions)
     public enum Connectivity {
       case wifiConnectionDetected
       public static func == (a: DIAnalytics.Event.Connectivity, b: DIAnalytics.Event.Connectivity) -> Swift.Bool
@@ -368,15 +369,20 @@ public protocol DIAnalyticsDelegate : AnyObject {
         get
       }
     }
-    public enum Resources {
-      case storage(ResourcesDataStorage)
+    public enum Storage {
+      case storage(StorageData)
+    }
+    public enum Permissions {
+      case permissionsStateChange(PermissionsData)
     }
     public func name() -> Swift.String
     public func data() -> [Swift.String : Any]
   }
   @objc deinit
 }
-public struct ResourcesDataStorage {
+public struct StorageData {
+}
+public struct PermissionsData {
 }
 public enum DIError : Swift.Error {
   public enum Authentication : Swift.Error, Foundation.LocalizedError {
@@ -549,9 +555,9 @@ public enum DIPermissionType : Swift.Int {
   case location
   case motion
   case backgroundRefresh
-  case powermode
+  case lowPowerMode
   case internet
-  case lowStorage
+  case storage
   public init?(rawValue: Swift.Int)
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
@@ -581,100 +587,113 @@ public enum DIPermissionRequest {
     get
   }
 }
-public enum DIPermissionReason : Swift.Equatable {
+public enum DIPermissionReason : Swift.Equatable, Swift.CustomStringConvertible {
   case location(DIPermissionReason.Location)
   case motion(DIPermissionReason.Motion)
   case internet(DIPermissionReason.Internet)
-  case powerMode(DIPermissionReason.PowerMode)
-  case lowStorage(DIPermissionReason.LowStorage)
+  case lowPowerMode(DIPermissionReason.LowPowerMode)
+  case storage(DIPermissionReason.Storage)
   case backgroundRefresh(DIPermissionReason.BackgroundRefresh)
-  public enum Location {
+  public enum Location : Swift.String, Swift.Codable {
     case notDetermined
-    case whenInUse
+    case onlyForeground
     case always
     case denied
     case restricted
     case reducedAccuracy
-    public static func == (a: DIPermissionReason.Location, b: DIPermissionReason.Location) -> Swift.Bool
-    public func hash(into hasher: inout Swift.Hasher)
-    public var hashValue: Swift.Int {
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
       get
     }
   }
-  public enum Motion {
+  public enum Motion : Swift.String, Swift.Codable {
     case notDetermined
     case restricted
     case denied
     case authorized
-    public static func == (a: DIPermissionReason.Motion, b: DIPermissionReason.Motion) -> Swift.Bool
-    public func hash(into hasher: inout Swift.Hasher)
-    public var hashValue: Swift.Int {
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
       get
     }
   }
-  public enum Internet {
+  public enum Internet : Swift.String, Swift.Codable {
     case wifi
     case cellular
     case off
-    public static func == (a: DIPermissionReason.Internet, b: DIPermissionReason.Internet) -> Swift.Bool
-    public func hash(into hasher: inout Swift.Hasher)
-    public var hashValue: Swift.Int {
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
       get
     }
   }
-  public enum PowerMode {
-    case on
-    case off
-    public static func == (a: DIPermissionReason.PowerMode, b: DIPermissionReason.PowerMode) -> Swift.Bool
-    public func hash(into hasher: inout Swift.Hasher)
-    public var hashValue: Swift.Int {
+  public enum LowPowerMode : Swift.String, Swift.Codable {
+    case enabled
+    case disabled
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
       get
     }
   }
-  public enum LowStorage {
+  public enum Storage : Swift.String, Swift.Codable {
     case low
     case normal
-    public static func == (a: DIPermissionReason.LowStorage, b: DIPermissionReason.LowStorage) -> Swift.Bool
-    public func hash(into hasher: inout Swift.Hasher)
-    public var hashValue: Swift.Int {
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
       get
     }
   }
-  public enum BackgroundRefresh {
+  public enum BackgroundRefresh : Swift.String, Swift.Codable {
     case restricted
     case denied
     case available
-    public static func == (a: DIPermissionReason.BackgroundRefresh, b: DIPermissionReason.BackgroundRefresh) -> Swift.Bool
-    public func hash(into hasher: inout Swift.Hasher)
-    public var hashValue: Swift.Int {
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
       get
     }
+  }
+  public var description: Swift.String {
+    get
   }
   public static func == (lhs: DIPermissionReason, rhs: DIPermissionReason) -> Swift.Bool
 }
 public protocol DIPermission : AnyObject {
   typealias PermissionDidChange = (DIPermission) -> Swift.Void
+  var identifier: DIPermissionType { get }
   var didChange: Self.PermissionDidChange? { get set }
   func reason() -> DIPermissionReason
   func status() -> DIPermissionStatus
-  func identifier() -> DIPermissionType
   func resolve()
   func resolve(request: DIPermissionRequest)
 }
 extension DIPermission {
   public func resolve()
-  public func resolve(request: DIPermissionRequest)
 }
-public class DIPermissionsManager {
-  public typealias PermissionsDidChange = (DIPermissionsManager) -> Swift.Void
-  public var didChange: DIPermissionsManager.PermissionsDidChange?
+@_hasMissingDesignatedInitializers final public class DIPermissionsManager {
+  public typealias PermissionID = PermissionObserver<DIPermissionsManager.PermissionChange>.Identifier
+  public typealias PermissionChange = ([DIPermission]) -> Swift.Void
+  final public var permissions: [DIPermission] {
+    get
+  }
   @objc deinit
-  public init()
-  public func allSettings() -> [DIPermission]
-  public func currentStatus() -> DIPermissionStatus
-  public func lastStatusData() -> [DIPermission]
-  public func startNotifier()
-  public func stopNotifier()
+  public static var shared: DIPermissionsManager
+  final public func currentStatus() -> DIPermissionStatus
+  final public func lastStatusData() -> [DIPermission]
+  final public func status(for type: DIPermissionType) -> DIPermissionStatus
+  final public func reason(for type: DIPermissionType) -> DIPermissionReason
+}
+extension DIPermissionsManager {
+  @discardableResult
+  final public func addObserver(_ then: @escaping DIPermissionsManager.PermissionChange) -> PermissionObserver<DIPermissionsManager.PermissionChange>.Identifier
+  final public func removeObserver(_ id: PermissionObserver<DIPermissionsManager.PermissionChange>.Identifier)
+}
+@_hasMissingDesignatedInitializers public class PermissionObserver<Callback> {
+  public typealias Identifier = Swift.UInt64
+  @objc deinit
 }
 public protocol DIChargingEvent : AnyObject {
   var tripGuid: Swift.String? { get }
@@ -845,16 +864,22 @@ extension DIPermissionRequest : Swift.Equatable {}
 extension DIPermissionRequest : Swift.Hashable {}
 extension DIPermissionReason.Location : Swift.Equatable {}
 extension DIPermissionReason.Location : Swift.Hashable {}
+extension DIPermissionReason.Location : Swift.RawRepresentable {}
 extension DIPermissionReason.Motion : Swift.Equatable {}
 extension DIPermissionReason.Motion : Swift.Hashable {}
+extension DIPermissionReason.Motion : Swift.RawRepresentable {}
 extension DIPermissionReason.Internet : Swift.Equatable {}
 extension DIPermissionReason.Internet : Swift.Hashable {}
-extension DIPermissionReason.PowerMode : Swift.Equatable {}
-extension DIPermissionReason.PowerMode : Swift.Hashable {}
-extension DIPermissionReason.LowStorage : Swift.Equatable {}
-extension DIPermissionReason.LowStorage : Swift.Hashable {}
+extension DIPermissionReason.Internet : Swift.RawRepresentable {}
+extension DIPermissionReason.LowPowerMode : Swift.Equatable {}
+extension DIPermissionReason.LowPowerMode : Swift.Hashable {}
+extension DIPermissionReason.LowPowerMode : Swift.RawRepresentable {}
+extension DIPermissionReason.Storage : Swift.Equatable {}
+extension DIPermissionReason.Storage : Swift.Hashable {}
+extension DIPermissionReason.Storage : Swift.RawRepresentable {}
 extension DIPermissionReason.BackgroundRefresh : Swift.Equatable {}
 extension DIPermissionReason.BackgroundRefresh : Swift.Hashable {}
+extension DIPermissionReason.BackgroundRefresh : Swift.RawRepresentable {}
 extension DIEventType : Swift.Equatable {}
 extension DIEventType : Swift.Hashable {}
 extension DIEventType : Swift.RawRepresentable {}

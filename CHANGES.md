@@ -2,6 +2,11 @@
 
 In this section you can find what has changed from version to version.
 
+## 5.2.0
+
+- Preserve permissions state between executions;
+- Implement permission analytics segment event;
+
 ## 5.1.0
 
 - Create API to return sync status;
